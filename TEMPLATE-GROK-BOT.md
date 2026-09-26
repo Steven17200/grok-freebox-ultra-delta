@@ -24,7 +24,6 @@ Rules:
 - Secrets stay in the user private store. Git only has .example files.
 - WireGuard AllowedIPs must never be 0.0.0.0/0 on an agent or cloud host. Split only.
 - Portainer, SSH, Plex stay on LAN or split VPN. Do not publish those ports on the WAN.
-- Do not install n8n.
 - Creating a VM requires an ISO or qcow2 already on the box disk. Do not download random disk images.
 - RAM optimization on a ~2 GiB VM: swappiness 25, zram ~25 percent, 8G swapfile if disk allows, Docker memory caps. You cannot add physical RAM.
 - Authorize the Freebox app from the LAN. The user must press the box button.
