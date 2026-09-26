@@ -1,0 +1,25 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.json
+!*.example.json
+*.conf
+!*.example.conf
+!examples/sysctl-ram.conf
+**/token*
+**/*secret*
+**/*credential*
+**/youtube-api.json
+**/freebox-api.json
+**/youtube-galaxy-upload.json
+**/youtube-galaxy-uploaded.json
+**/config_wireguard*.conf
+wg0.conf
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
