@@ -1,0 +1,12 @@
+{
+  "app_id": "fr.example.grok.home",
+  "app_name": "Grok Home",
+  "app_version": "1.0.0",
+  "device_name": "grok-agent",
+  "app_token": "REPLACE",
+  "api_domain": "mafreebox.freebox.fr",
+  "https_port": 443,
+  "api_base_url": "/api/",
+  "api_version": "v8",
+  "verify_tls": false
+}

@@ -1,0 +1,21 @@
+#cloud-config
+hostname: fbx-lab
+package_update: true
+packages:
+  - qemu-guest-agent
+  - ca-certificates
+  - curl
+  - ufw
+runcmd:
+  - install -m 0755 -d /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  - chmod a+r /etc/apt/keyrings/docker.asc
+  - bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" > /etc/apt/sources.list.d/docker.list'
+  - apt-get update
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  - docker volume create portainer_data
+  - docker run -d --name portainer --restart=always -p 127.0.0.1:9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:lts
+  - ufw default deny incoming
+  - ufw allow 22/tcp
+  - ufw --force enable
+final_message: "fbx-lab ready. Portainer is localhost:9000 only."
