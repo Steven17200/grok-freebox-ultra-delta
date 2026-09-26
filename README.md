@@ -36,7 +36,6 @@ flowchart LR
 
 - Full-tunnel VPN
 - WAN-exposed Portainer / SSH / Plex
-- n8n
 - Real tokens, keys, WAN IPs
 
 ## License
