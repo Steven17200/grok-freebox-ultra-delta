@@ -1,0 +1,110 @@
+name: fbx-lab-media
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+      WEBUI_PORT: 8080
+    volumes:
+      - ${CONFIG_ROOT}/qbittorrent:/config
+      - ${DOWNLOADS_ROOT}:/downloads
+    ports:
+      - "${BIND:-127.0.0.1}:8080:8080"
+    mem_limit: 256m
+    memswap_limit: 512m
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ${CONFIG_ROOT}/prowlarr:/config
+    ports:
+      - "${BIND:-127.0.0.1}:9696:9696"
+    mem_limit: 160m
+    memswap_limit: 320m
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ${CONFIG_ROOT}/radarr:/config
+      - ${MEDIA_ROOT}/movies:/movies
+      - ${DOWNLOADS_ROOT}:/downloads
+    ports:
+      - "${BIND:-127.0.0.1}:7878:7878"
+    mem_limit: 192m
+    memswap_limit: 384m
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ${CONFIG_ROOT}/sonarr:/config
+      - ${MEDIA_ROOT}/tv:/tv
+      - ${DOWNLOADS_ROOT}:/downloads
+    ports:
+      - "${BIND:-127.0.0.1}:8989:8989"
+    mem_limit: 160m
+    memswap_limit: 320m
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ${CONFIG_ROOT}/overseerr:/config
+    ports:
+      - "${BIND:-127.0.0.1}:5055:5055"
+    mem_limit: 256m
+    memswap_limit: 512m
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ${CONFIG_ROOT}/tautulli:/config
+    ports:
+      - "${BIND:-127.0.0.1}:8181:8181"
+    mem_limit: 128m
+    memswap_limit: 256m
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: ${TZ:-Europe/Paris}
+      VERSION: docker
+    volumes:
+      - ${CONFIG_ROOT}/plex:/config
+      - ${MEDIA_ROOT}/movies:/movies
+      - ${MEDIA_ROOT}/tv:/tv
+    ports:
+      - "${BIND:-127.0.0.1}:32400:32400"
+    mem_limit: 768m
+    memswap_limit: 1536m
+    profiles: ["plex"]
